@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Zoom-In Parallax Reveal</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 200vh;
+      font-family: sans-serif;
+      background: #eee;
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      position: sticky;
+      top: 20vh;
+      width: 80%;
+      max-width: 500px;
+      aspect-ratio: 16/9;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .masked-text {
+      font-size: 4rem;
+      font-weight: bold;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') center/cover;
+      -webkit-background-clip: text;
+      color: transparent;
+      transition: transform 0.3s ease-out;
+      transform: scale(1);
+    }
+
+    .full-image {
+      position: absolute;
+      top: 20vh;
+      width: 80%;
+      max-width: 500px;
+      aspect-ratio: 16/9;
+      border-radius: 20px;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') center/cover;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 0.5s ease-out, transform 0.6s ease-out;
+      z-index: 1;
+    }
+
+    /* Active states */
+    .masked-text.zoomed {
+      transform: scale(1.8);
+    }
+
+    .full-image.reveal {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="full-image" id="fullImage"></div>
+
+    <div class="card" id="card">
+      <div class="masked-text" id="maskedText">maldives</div>
+    </div>
+  </div>
+
+  <script>
+    const text = document.getElementById('maskedText');
+    const image = document.getElementById('fullImage');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const trigger = window.innerHeight * 0.3;
+
+      if (scrollY > trigger) {
+        text.classList.add('zoomed');
+        image.classList.add('reveal');
+      } else {
+        text.classList.remove('zoomed');
+        image.classList.remove('reveal');
+      }
+    });
+  </script>
+
+</body>
+</html>
